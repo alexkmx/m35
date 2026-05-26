@@ -1,0 +1,20 @@
+
+
+.header_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: dotted;
+    
+    
+   a{
+    font-size: 2.5rem;
+    padding-left: 20px;
+    cursor: pointer;
+    padding-right: 30px;
+    }     
+    img{
+        padding: 20px 0 20px 20px;
+        width: 150px;
+    }
+}

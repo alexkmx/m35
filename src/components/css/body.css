@@ -1,0 +1,19 @@
+.body_container {
+    
+    img {
+        width: 100%;
+    }
+
+    h3{
+        font-size: 3rem;
+        text-align: center;
+        margin: 40px 0 40px 0;
+    }
+}
+
+.cards_container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    
+}
