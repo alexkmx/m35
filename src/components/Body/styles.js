@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import resto from "../../assets/Images/resto.jpg";
 
 const HeroContainer = styled.section`
 img {
@@ -12,9 +13,12 @@ h2{
     text-decoration: underline;
     margin: 50px 0 50px 0;
 }
+`;
 
-`
+const Hero = styled.div` 
+        
     
+`;
 
 
 const CardContainer = styled.div`
@@ -24,4 +28,4 @@ const CardContainer = styled.div`
     text-align: center;
 `;
     
-export { HeroContainer, CardContainer}
+export { HeroContainer, CardContainer, Hero}

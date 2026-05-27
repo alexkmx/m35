@@ -1,21 +1,21 @@
-import Header from "../Header/Header";
-import Body from "../Body/Body";
-import Footer from "../Footer/Footer";
+import HeaderComponent from "../Header/HeaderComponent";
+import BodyComponent from "../Body/BodyComponent";
+import FooterComponent from "../Footer/FooterComponent";
 import Card from "../Card/Card";
 import { BodyContainer } from "./styles";
+import { GlobalStyle } from "../../styles/GlobalStyles";
 
-const App = () => {
+const Index = () => {
   return (
-    <BodyContainer>
-      
-        <Header />
-        <Body />
-        <Footer />
-      
-      
-    </BodyContainer>
+    
+      <BodyContainer>
+          <HeaderComponent />
+          <BodyComponent />
+          <FooterComponent />
+      </BodyContainer>
+   
     
   );
 }
 
-export default App;
+export default Index;

@@ -1,15 +1,15 @@
-import resto from "../../assets/Images/resto.jpg";
+
 import arrozconmole from "../../assets/Images/arrozconmole.jpg";
 import lasagna from "../../assets/Images/lasagna.jpg";
 import ratatouille from "../../assets/Images/ratatouille.webp";
 import Card from "../Card/Card";
-import {HeroContainer, CardContainer} from "./styles";
+import {HeroContainer, CardContainer, Hero} from "./styles";
+import resto from "../../assets/Images/resto.jpg";
 
-
-const Body = () => {
+const BodyComponent = () => {
     return(
         <HeroContainer>
-            <img src={resto} alt="Perro con platos"/>
+            <Hero alt="Imagen Resto"><img src={resto}></img></Hero>
             <h2>Nuestras recomendaciones</h2>
             <CardContainer>
                 <Card 
@@ -32,4 +32,4 @@ const Body = () => {
     )
 };
 
-export default Body;
+export default BodyComponent;

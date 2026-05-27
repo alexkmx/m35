@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 
-const BodyContainer = styled.html`
+const BodyContainer = styled.div`
     background-color: grey;    
 font-family: "Cousine", monospace;
   font-weight: 400;

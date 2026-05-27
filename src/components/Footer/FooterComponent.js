@@ -1,14 +1,14 @@
 import { FooterContainer, GridFooter } from "./styles";
 
-const Footer = () => {
+const FooterComponent = () => {
     return(
         <FooterContainer>
             <GridFooter>
                 <div>
                     <h3>Categorias</h3>
+                    <li><a href="/">Inicio</a></li>
                     <li>Platillos</li>
                     <li>Recetas</li>
-                    <li>Galería</li>
                     <li>Blog</li>
                     <li>Contacto</li>
                 </div>
@@ -33,4 +33,4 @@ const Footer = () => {
     )
 };
 
-export default Footer;
+export default FooterComponent;
