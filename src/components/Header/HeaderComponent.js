@@ -2,7 +2,7 @@ import logoch from "../../assets/Images/logoch.png";
 import { HeaderContainer, Logo, Enlaces, ContenedorEnlaces } from "./styles";
 //import styles from "./styles";
 import Platillos from "../Body/Platillos/Platillos";
-import Recetas from "../Body/Recetas/Recetas";
+import RecetaDetalle from "../Body/Recetas/RecetaDetalle";
 import Blog from "../Body/Blog/Blog";
 import Contacto from "../Body/Contacto/Contacto";
 

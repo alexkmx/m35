@@ -1,4 +1,4 @@
-import HeaderComponent from "../Header/HeaderComponent";
+
 import BodyComponent from "../Body/BodyComponent";
 import FooterComponent from "../Footer/FooterComponent";
 import Card from "../Card/Card";
@@ -9,9 +9,9 @@ const Index = () => {
   return (
     
       <BodyContainer>
-          <HeaderComponent />
+          
           <BodyComponent />
-          <FooterComponent />
+          
       </BodyContainer>
    
     

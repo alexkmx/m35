@@ -1,10 +1,10 @@
-import HeaderComponent from "../../Header/HeaderComponent"
+import { BlogContainer } from "./styles";
 
 const Blog = () => {
     return(
-        <section>
-            <HeaderComponent />
-        </section>
+        <BlogContainer>
+           <h1>Blog</h1>
+        </BlogContainer>
     )
 }
 
