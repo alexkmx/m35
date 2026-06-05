@@ -37,6 +37,21 @@ const Button = styled.button`
     fontWeight: bold;
 `;
 
+const BuscadorContainer = styled.section`
+    marginBottom: 30px; 
+    textAlign: center;
+    
+    input {
+        padding: 12px 20px;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 25px;
+        border: 2px solid #ccc;
+        font-size: 16px;
+        outline: none;
+    }
+`;
 
 
-export {PlatillosContainer, BotonesContainer, CardsContainer, Card, Button}
+
+export {PlatillosContainer, BotonesContainer, CardsContainer, Card, Button, BuscadorContainer}

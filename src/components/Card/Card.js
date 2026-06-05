@@ -1,12 +1,19 @@
 import {CardContainer, Item} from "./styles";
+import {Link} from "react-router-dom";
 
-const Card = (props) => {
+const Card = ({title, img, text, receta}) => {
     return(
         <CardContainer>
             <Item>
-                <img src={props.img} alt={props.title} />
-                <h3>{props.text}</h3>
-                <a href="#">{props.title}</a>
+                <img src={img} alt={title} />
+                <h3>{text}</h3>
+                {receta ? (
+                <Link to={receta} style={{ textDecoration: 'none', color: '#ff6b6b', fontWeight: 'bold' }}>
+                    {title}
+                </Link>
+            ) : (
+                <span style={{ color: 'gray' }}>{title}</span>
+            )}
             </Item>
         </CardContainer>
      

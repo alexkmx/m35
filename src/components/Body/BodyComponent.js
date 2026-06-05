@@ -13,19 +13,25 @@ const BodyComponent = () => {
             <h2>Nuestras recomendaciones</h2>
             <CardContainer>
                 <Card 
+                    
                     title={"Ver receta"} 
                     img={lasagna} 
                     text={"Cocina Italiana"}
+                    receta={"recetas/52775"} 
+                    
                 />
                 <Card 
                     title={"Ver receta"} 
                     img={ratatouille} 
                     text={"Cocina Francesa"}
+                    receta={"recetas/52908"}
                 />
                 <Card 
                     title={"Ver receta"} 
                     img={arrozconmole} 
                     text={"Cocina Mexicana"}
+                    receta={"#"}
+                    
                 />
             </CardContainer>
         </HeroContainer>

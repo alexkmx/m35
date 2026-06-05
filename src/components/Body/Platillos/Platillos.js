@@ -1,105 +1,171 @@
 import { useEffect, useState } from "react";
-import FooterComponent from "../../Footer/FooterComponent";
-import axios from "axios"
-import {BotonesContainer, PlatillosContainer, CardsContainer, Card, Button} from "./styles";
-import { Link } from "react-router";
-
+import { Link } from "react-router-dom";
+import axios from "axios";
+import {BuscadorContainer} from "./styles";
 
 const ListaPlatillos = () => {
+    // Estados para el índice alfabético y carga
+    const [platillosAlfabetico, setPlatillosAlfabetico] = useState([]);
+    const [cargando, setCargando] = useState(true);
 
-    const [platillos, setPlatillos] = useState([]);
-    const [categorias, setCategorias] = useState([]);
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
-    const [cargandoPlatillos, setCargandoPlatillos] = useState(false);
+    // Estados para la búsqueda por nombre
+    const [busqueda, setBusqueda] = useState("");
+    const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
+    const [buscando, setBuscando] = useState(false);
 
+    // 1. EFECTO: Carga el índice alfabético (A-Z) al iniciar la app
     useEffect(() => {
-        const fetchCategorias = async () => {
-            try {
-                const response = await axios.get("https://www.themealdb.com/api/json/v1/1/categories.php");
-                
-                if(response.data.categories) {
-                    setCategorias(response.data.categories);
+        const fetchPlatillosPorAbecedario = async () => {
+            setCargando(true);
+            const abecedario = "abcdefghijklmnopqrstuvwxyz".split("");
+            const listaFiltrada = [];
 
-                    if(response.data.categories.length > 0) {
-                        setCategoriaSeleccionada(response.data.categories[0].strCategory);
-                        
+            try {
+                // Creamos todas las promesas de peticiones al mismo tiempo (A, B, C...)
+                const promesas = abecedario.map(letra =>
+                    axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letra}`)
+                );
+
+                // Esperamos a que todas las peticiones terminen
+                const respuestas = await Promise.all(promesas);
+
+                respuestas.forEach((response) => {
+                    // Si la API regresó platillos para esa letra
+                    if (response.data.meals && response.data.meals.length > 0) {
+                        // Tomamos ÚNICAMENTE el primer platillo de la lista ([0])
+                        listaFiltrada.push(response.data.meals[0]);
                     }
-                }
-                } catch (error) {
-                    console.error("Error al obtener categorias", error)
-                }
-            };
-            fetchCategorias();
-        }, []);
-    
+                });
 
-    useEffect(() => {
-
-        if(!categoriaSeleccionada) return;
-
-        const fetchPlatillosPorCategoria = async () => {
-            setCargandoPlatillos(true);
-            try {
-
-                const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoriaSeleccionada}`);
-                
-                if(response.data.meals){
-                    setPlatillos(response.data.meals);
-                } else {
-                    setPlatillos([]);
-                }
+                setPlatillosAlfabetico(listaFiltrada);
             } catch (error) {
-                console.error("Error al obtener los platillos", error);
-                setPlatillos([]);
+                console.error("Error al armar el índice alfabético:", error);
             } finally {
-                setCargandoPlatillos(false);
+                setCargando(false);
             }
         };
 
-        fetchPlatillosPorCategoria();
-    }, [categoriaSeleccionada]);
+        fetchPlatillosPorAbecedario();
+    }, []);
 
+    // 2. EFECTO: Se ejecuta cada vez que el usuario escribe en el buscador
+    useEffect(() => {
+        // Si el input está vacío, limpiamos los resultados de búsqueda
+        if (busqueda.trim() === "") {
+            setResultadosBusqueda([]);
+            return;
+        }
+
+        const buscarPlatilloPorNombre = async () => {
+            setBuscando(true);
+            try {
+                const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${busqueda}`);
+                if (response.data.meals) {
+                    setResultadosBusqueda(response.data.meals);
+                } else {
+                    setResultadosBusqueda([]); // No se encontraron resultados
+                }
+            } catch (error) {
+                console.error("Error en la búsqueda:", error);
+            } finally {
+                setBuscando(false);
+            }
+        };
+
+        // Pequeño temporizador (Debounce) para no saturar la API en cada tecla que presiona el usuario
+        const delayDebounce = setTimeout(() => {
+            buscarPlatilloPorNombre();
+        }, 400);
+
+        return () => clearTimeout(delayDebounce);
+    }, [busqueda]);
+
+    // Decidimos qué lista mostrar en pantalla basándonos en si el usuario está buscando algo o no
+    const modoBusquedaActivo = busqueda.trim() !== "";
+    const platillosA_Mostrar = modoBusquedaActivo ? resultadosBusqueda : platillosAlfabetico;
 
     return (
-        <PlatillosContainer>
-          <h2>Selecciona categoría:</h2>
-                
-            <BotonesContainer>
-                {categorias.map((cat) => (
-                    <Button 
-                        key={cat.idCategory}
-                        onClick={() => setCategoriaSeleccionada(cat.strCategory)}
-                       
-                    >
-                        {cat.strCategory}
-                    </Button>
-                ))}
-            </BotonesContainer>
-
+        <section style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
             
-            <h2>Platillos de: {categoriaSeleccionada}</h2>
-            <p>Clic en el platillo de tu elección para ver la receta:</p>
-            {cargandoPlatillos ? (
-                <p>Cargando platillos...</p>
+            
+            <BuscadorContainer>
+                <input 
+                    type="text"
+                    placeholder="🔍 Buscar platillo por nombre..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                    
+                />
+            </BuscadorContainer>
+
+            {/* --- TÍTULOS DINÁMICOS --- */}
+            <h2>{modoBusquedaActivo ? `Resultados para: "${busqueda}"` : "Índice de Platillos (A - Z)"}</h2>
+            
+            {/* --- ESTADOS DE CARGA --- */}
+            {(cargando && !modoBusquedaActivo) || buscando ? (
+                <p>Buscando delicias gastronómicas...</p>
+            ) : platillosA_Mostrar.length === 0 ? (
+                <p>No se encontraron platillos que coincidan con tu búsqueda.</p>
             ) : (
-                <CardsContainer>
-                    {platillos?.map((platillo) => {
+                /* --- CUADRÍCULA DE PLATILLOS --- */
+                <section style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
+                    
+                    gap: '20px',
+                    marginTop: '20px',
+                    
+                }}>
+                    {platillosA_Mostrar.map((platillo) => {
                         const { idMeal, strMeal, strMealThumb } = platillo;
+                        
+                        // Extraemos la primera letra para el distintivo visual
+                        const primeraLetra = strMeal.charAt(0).toUpperCase();
 
                         return (
-                            <Link to={`/recetas/${idMeal}`} key={idMeal} styles={{backgroundColor: "red",
-                                color: "white"}}>
-                                <Card key={idMeal}>
-                                    <img src={strMealThumb} alt={strMeal} style={{ width: '100%', borderRadius: '5px' }} />
-                                    <h3 style={{ fontSize: '1.1rem', marginTop: '10px', color: "white", textDecoration: "none" }}>{strMeal}</h3>
-                                </Card>
+                            <Link to={`/recetas/${idMeal}`} key={idMeal} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <article style={{ 
+                                    border: '1px solid #e0e0e0', 
+                                    padding: '15px', 
+                                    borderRadius: '12px', 
+                                    textAlign: 'center',
+                                    backgroundColor: '#ff00ff',
+                                    color: 'white',
+                                    boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+                                    position: 'relative'
+                                }}>
+                                    {/* Distintivo de la letra (Solo en modo alfabético) */}
+                                    {!modoBusquedaActivo && (
+                                        <span style={{
+                                            position: 'absolute',
+                                            top: '10px',
+                                            left: '10px',
+                                            backgroundColor: '#ff6b6b',
+                                            color: 'white',
+                                            padding: '2px 8px',
+                                            borderRadius: '15px',
+                                            fontSize: '12px',
+                                            fontWeight: 'bold'
+                                        }}>
+                                            Letra {primeraLetra}
+                                        </span>
+                                    )}
+
+                                    <img 
+                                        src={strMealThumb} 
+                                        alt={strMeal} 
+                                        style={{ width: '100%', borderRadius: '8px', height: '180px', objectFit: 'cover' }} 
+                                    />
+                                    <h3 style={{ fontSize: '1rem', marginTop: '12px', height: '40px', overflow: 'hidden' }}>
+                                        {strMeal}
+                                    </h3>
+                                </article>
                             </Link>
                         );
                     })}
-                </CardsContainer>
+                </section>
             )}
-        
-        </PlatillosContainer>
+        </section>
     );
 };
 

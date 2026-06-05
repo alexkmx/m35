@@ -8,7 +8,7 @@ const FooterComponent = () => {
                     <h3>Categorias</h3>
                     <li><a href="/">Inicio</a></li>
                     <li><a href="/platillos">Platillos</a></li>
-                    <li>Recetas</li>
+                    <li><a href="/recetas">Recetas</a></li>
                     <li>Blog</li>
                     <li>Contacto</li>
                 </div>
