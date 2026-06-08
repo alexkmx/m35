@@ -9,7 +9,7 @@ import resto from "../../assets/Images/resto.jpg";
 const BodyComponent = () => {
     return(
         <HeroContainer>
-            <Hero alt="Imagen Resto"><img src={resto}></img></Hero>
+            <Hero ><img src={resto} alt="Imagen Resto"></img></Hero>
             <h2>Nuestras recomendaciones</h2>
             <CardContainer>
                 <Card 

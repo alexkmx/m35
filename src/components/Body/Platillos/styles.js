@@ -3,6 +3,7 @@ import styled from "styled-components";
 const PlatillosContainer = styled.section`
     background-color: grey;
     padding: 20px;
+    
 `;
 
 const BotonesContainer = styled.div`

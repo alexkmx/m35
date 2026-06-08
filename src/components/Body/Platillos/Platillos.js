@@ -2,19 +2,33 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import {BuscadorContainer} from "./styles";
+import { useDispatch, useSelector } from "react-redux";
+import {setListaPlatillos} from "../../../features/recetas/recetasSlice";
 
 const ListaPlatillos = () => {
     // Estados para el índice alfabético y carga
-    const [platillosAlfabetico, setPlatillosAlfabetico] = useState([]);
-    const [cargando, setCargando] = useState(true);
+    //const [platillosAlfabetico, setPlatillosAlfabetico] = useState([]);
+    //const [cargando, setCargando] = useState(true);
+
+    const dispatch = useDispatch();
+
+    //  const platillos = useSelector((state) => state.recetas.ListaPlatillos);
+    const platillosAlfabetico = useSelector((state) => state.recetas.listaPlatillos);
 
     // Estados para la búsqueda por nombre
+    const [cargando, setCargando] = useState(true);
     const [busqueda, setBusqueda] = useState("");
     const [resultadosBusqueda, setResultadosBusqueda] = useState([]);
     const [buscando, setBuscando] = useState(false);
 
     // 1. EFECTO: Carga el índice alfabético (A-Z) al iniciar la app
     useEffect(() => {
+
+        if(platillosAlfabetico?.length > 0) {
+            setCargando(false);
+            return;
+        }
+
         const fetchPlatillosPorAbecedario = async () => {
             setCargando(true);
             const abecedario = "abcdefghijklmnopqrstuvwxyz".split("");
@@ -37,7 +51,8 @@ const ListaPlatillos = () => {
                     }
                 });
 
-                setPlatillosAlfabetico(listaFiltrada);
+                dispatch(setListaPlatillos(listaFiltrada));
+
             } catch (error) {
                 console.error("Error al armar el índice alfabético:", error);
             } finally {
@@ -46,7 +61,7 @@ const ListaPlatillos = () => {
         };
 
         fetchPlatillosPorAbecedario();
-    }, []);
+    }, [dispatch, platillosAlfabetico?.length]);
 
     // 2. EFECTO: Se ejecuta cada vez que el usuario escribe en el buscador
     useEffect(() => {
