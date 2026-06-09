@@ -7,8 +7,7 @@ import {setListaPlatillos} from "../../../features/recetas/recetasSlice";
 
 const ListaPlatillos = () => {
     // Estados para el índice alfabético y carga
-    //const [platillosAlfabetico, setPlatillosAlfabetico] = useState([]);
-    //const [cargando, setCargando] = useState(true);
+    
 
     const dispatch = useDispatch();
 

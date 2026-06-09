@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import resto from "../../assets/Images/resto.jpg";
+
 
 const HeroContainer = styled.section`
 img {

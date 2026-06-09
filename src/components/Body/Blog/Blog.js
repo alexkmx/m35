@@ -11,9 +11,7 @@ const Blog = () => {
            <img src={asada} alt="Imagen de carne asada"></img>
             <TextContainer>
                 <p>Lograr una carne perfectamente jugosa, suave y llena de sabor depende de unas cuantas técnicas clave. El secreto principal es sellarla a fuego muy alto para retener los jugos, seguido de una cocción precisa y el tiempo de reposo adecuado.</p>
-           
-           <p>A continuación, los trucos más efectivos para cocinar cualquier corte:</p>
-
+                <p>A continuación, los trucos más efectivos para cocinar cualquier corte:</p>
            <ul>
             <li>Sácala del refrigerador:Permite que la carne tome temperatura ambiente unos 15 a 30 minutos antes de cocinarla. Esto evita un choque térmico y asegura una cocción uniforme.</li>
             <li>Sécala perfectamente: Usa papel absorbente para quitar toda la humedad de la superficie. Si está mojada, la carne se hervirá y quedará gris en lugar de dorarse</li>
@@ -30,7 +28,7 @@ const Blog = () => {
             <h2>Consejos para elegir el mejor pescado</h2>
             <TextContainer>
                 <p>Para elegir el pescado más fresco y de mejor calidad, el truco principal es confiar en tus sentidos: ojos brillantes, olor limpio a mar y consistencia firme al tacto. Un pescado en mal estado delata su falta de frescura de inmediato a través de la opacidad y los olores intensos.</p>
-            <p>Sigue esta guía rápida para identificar un pescado en perfectas condiciones:</p>
+                <p>Sigue esta guía rápida para identificar un pescado en perfectas condiciones:</p>
             <ul>
                 <li>Los ojos: Deben ser saltones, limpios, transparentes y brillantes. Si están hundidos, opacos o blanquecinos, el pescado no es fresco.</li>
                 <li>Las agallas: Levanta la tapa de la branquia. Deben lucir de un color rojo vivo o rosa intenso, y estar libres de mucosidad pastosa. Descarta los tonos marrones o grisáceos</li>
